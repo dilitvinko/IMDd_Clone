@@ -1,0 +1,159 @@
+databaseChangeLog:
+  - changeSet:
+      id: 000-initial-1
+      author: dmitry.l
+      comment: Create Users table
+      changes:
+        - createTable:
+            tableName: user
+            columns:
+              - column:
+                  name: id
+                  type: BIGINT
+                  constraints:
+                    primaryKey: true
+              - column:
+                  name: name
+                  type: VARCHAR(255)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: email
+                  type: VARCHAR(255)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: login
+                  type: VARCHAR(255)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: password
+                  type: VARCHAR(255)
+                  constraints:
+                    nullable: false
+
+        - addUniqueConstraint:
+            constraintName: Login_UN
+            tableName: user
+            columnNames: login
+        - addUniqueConstraint:
+            constraintName: Email_UN
+            tableName: user
+            columnNames: email
+
+  - changeSet:
+      id: 000-initial-2
+      author: dmitry.l
+      comment: Create Film table
+      changes:
+        - createTable:
+            tableName: film
+            columns:
+              - column:
+                  name: id
+                  type: BIGINT
+                  constraints:
+                    primaryKey: true
+              - column:
+                  name: name
+                  type: VARCHAR(255)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: release_date
+                  type: DATE
+              - column:
+                  name: description
+                  type: TEXT
+
+  - changeSet:
+      id: 000-initial-3
+      author: dmitry.l
+      comment: Create Comment table
+      changes:
+        - createTable:
+            tableName: comment
+            columns:
+              - column:
+                  name: id
+                  type: BIGINT
+                  constraints:
+                    primaryKey: true
+              - column:
+                  name: text
+                  type: VARCHAR(255)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: user_id
+                  type: BIGINT
+                  constraints:
+                    nullable: false
+              - column:
+                  name: film_id
+                  type: BIGINT
+                  constraints:
+                    nullable: false
+        - addForeignKeyConstraint:
+            baseColumnNames: user_id
+            baseTableName: comment
+            constraintName: FK_Comment_user_id
+            referencedColumnNames: id
+            referencedTableName: user
+        - addForeignKeyConstraint:
+            baseColumnNames: film_id
+            baseTableName: comment
+            constraintName: FK_Comment_film_id
+            referencedColumnNames: id
+            referencedTableName: film
+        - addUniqueConstraint:
+            tableName: comment
+            columnNames: user_id, film_id
+            constraintName: Comment_User_Film_Constr_Unique
+
+
+  - changeSet:
+      id: 000-initial-4
+      author: dmitry.l
+      comment: Create Rating table
+      changes:
+        - createTable:
+            tableName: rating
+            columns:
+              - column:
+                  name: id
+                  type: BIGINT
+                  constraints:
+                    primaryKey: true
+              - column:
+                  name: points
+                  type: INT
+                  constraints:
+                    nullable: false
+              - column:
+                  name: user_id
+                  type: BIGINT
+                  constraints:
+                    nullable: false
+              - column:
+                  name: film_id
+                  type: BIGINT
+                  constraints:
+                    nullable: false
+        - addForeignKeyConstraint:
+            baseColumnNames: user_id
+            baseTableName: rating
+            constraintName: FK_Rating_user_id
+            referencedColumnNames: id
+            referencedTableName: user
+        - addForeignKeyConstraint:
+            baseColumnNames: film_id
+            baseTableName: rating
+            constraintName: FK_Rating_film_id
+            referencedColumnNames: id
+            referencedTableName: film
+        - addUniqueConstraint:
+            tableName: rating
+            columnNames: user_id, film_id
+            constraintName: Rating_User_Film_Constr_Unique

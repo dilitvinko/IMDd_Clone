@@ -1,0 +1,7 @@
+databaseChangeLog:
+
+  - include:
+      file: db/changelog/versions/000-initial-db.changelog.yaml
+
+  - include:
+      file: db/changelog/versions/099-test-data.changelog.yaml
