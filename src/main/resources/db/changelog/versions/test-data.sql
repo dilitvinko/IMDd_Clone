@@ -9,7 +9,7 @@ VALUES
     (7, 'Dune', '2021-01-01', 'Dune description'),
     (8, 'Dune: Part Two', '2024-01-01', 'Dune: Part Two description');
 
-INSERT INTO public.user(id, name, email, login, password)
+INSERT INTO public.users(id, name, email, username, password)
 VALUES
     (1, 'admin', '2014-01-01', 'adminlogin', 'password'),
     (2, 'Dmitry', 'litvinko@mail.ru', 'dilit', 'password'),
@@ -64,3 +64,17 @@ VALUES
     (19, 9, '5', '3'),
     (20, 10, '5', '4'),
     (21, 1, '5', '5');
+
+INSERT INTO public.role(id, name)
+VALUES
+    (1, 'ADMIN'),
+    (2, 'USER');
+
+INSERT INTO public.user_role(user_id, role_id)
+VALUES
+    (1, 1),
+    (1, 2),
+    (2, 2),
+    (3, 2),
+    (4, 2),
+    (5, 2);

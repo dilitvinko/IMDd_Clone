@@ -1,0 +1,16 @@
+package com.my.project.imdd_clone.mapper;
+
+import com.my.project.imdd_clone.DTO.UserDto;
+import com.my.project.imdd_clone.model.User;
+import org.mapstruct.*;
+
+@Mapper(componentModel = "spring")
+public interface UserMapper {
+
+    UserDto toDto(User entity);
+
+    User toEntity(UserDto entity);
+
+    @BeanMapping(nullValuePropertyMappingStrategy = NullValuePropertyMappingStrategy.IGNORE)
+    void updatePartial(@MappingTarget User entity, UserDto dto);
+}

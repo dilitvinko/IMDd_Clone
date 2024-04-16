@@ -11,6 +11,24 @@ spring:
     password: postgres
   jpa:
     database-platform: org.hibernate.dialect.PostgreSQLDialect
+    hibernate.ddl-auto: update
     show-sql: true
   liquibase:
     change-log: classpath:db/changelog/db.changelog-master.yaml
+  security:
+    user:
+      password: testpassword
+
+
+jwt-variables:
+  EXPIRES_ACCESS_TOKEN_MINUTE: 25
+  ISSUER: dev
+  KEY: asdqwe123+K3Y
+
+logging:
+  level:
+    org:
+      hibernate:
+        orm:
+          jdbc:
+            bind: trace
