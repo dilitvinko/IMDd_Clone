@@ -12,7 +12,8 @@ import java.util.Objects;
 @Getter
 @Setter
 public class Film {
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "film_seq")
+    @SequenceGenerator(name = "film_seq", allocationSize = 1)
     @Id
     @Column(name = "id")
     private long id;

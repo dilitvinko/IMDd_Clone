@@ -13,7 +13,8 @@ import java.util.Set;
 @Setter
 @Table(name = "users")
 public class User {
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "user_seq")
+    @SequenceGenerator(name = "user_seq", allocationSize = 1)
     @Id
     @Column(name = "id")
     private long id;
@@ -33,7 +34,7 @@ public class User {
     private List<Comment> comments;
     @OneToMany(mappedBy = "user")
     private List<Rating> ratings;
-    @ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.MERGE)
+    @ManyToMany(fetch = FetchType.EAGER, cascade = {CascadeType.PERSIST, CascadeType.MERGE})
     @JoinTable(
             name = "user_role",
             joinColumns = @JoinColumn(name = "user_id", referencedColumnName = "id"),

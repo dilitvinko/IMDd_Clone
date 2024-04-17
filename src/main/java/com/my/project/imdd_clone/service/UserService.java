@@ -28,4 +28,8 @@ public class UserService {
     public UserDto getDtoByUsername(String username) {
         return mapper.toDto(getByUsername(username));
     }
+
+    public User save(User user) {
+        return repository.save(user);
+    }
 }

@@ -43,8 +43,6 @@ public class SecurityConfig {
                         .requestMatchers("/api/admin/**").hasRole("ADMIN")
                         .requestMatchers("/auth/**").permitAll()
                         .requestMatchers("/healthCheck").permitAll()
-                        .requestMatchers("/healthCheck/permission/admin").hasRole("ADMIN")
-                        .requestMatchers("/healthCheck/permission/user").hasRole("USER")
                         .anyRequest().authenticated()
                 )
                 .addFilterBefore(jwtFilter, UsernamePasswordAuthenticationFilter.class)

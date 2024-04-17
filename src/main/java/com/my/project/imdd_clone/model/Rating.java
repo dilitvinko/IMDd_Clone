@@ -10,7 +10,8 @@ import java.util.Objects;
 @Getter
 @Setter
 public class Rating {
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "rating_seq")
+    @SequenceGenerator(name = "rating_seq", allocationSize = 1)
     @Id
     @Column(name = "id")
     private long id;

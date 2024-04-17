@@ -2,6 +2,7 @@ package com.my.project.imdd_clone.controller;
 
 import com.my.project.imdd_clone.DTO.LoginRequest;
 import com.my.project.imdd_clone.DTO.TokenDto;
+import com.my.project.imdd_clone.DTO.UserDto;
 import com.my.project.imdd_clone.service.AuthService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
@@ -21,5 +22,10 @@ public class AuthController {
     @PostMapping("/login")
     public ResponseEntity<TokenDto> login(@Valid @RequestBody LoginRequest loginRequest) {
         return ResponseEntity.ok().body(authService.login(loginRequest));
+    }
+
+    @PostMapping("/registration")
+    public ResponseEntity<TokenDto> registration(@Valid @RequestBody UserDto userDto) {
+        return ResponseEntity.ok().body(authService.registerNewUser(userDto));
     }
 }

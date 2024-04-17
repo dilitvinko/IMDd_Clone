@@ -10,7 +10,8 @@ import java.util.Objects;
 @Getter
 @Setter
 public class Comment {
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "comment_seq")
+    @SequenceGenerator(name = "comment_seq", allocationSize = 1)
     @Id
     @Column(name = "id")
     private long id;
