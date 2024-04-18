@@ -1,9 +1,11 @@
 package com.my.project.imdd_clone.controller.security;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.my.project.imdd_clone.controller.handler.ErrorMessage;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.web.AuthenticationEntryPoint;
 import org.springframework.stereotype.Component;
@@ -28,6 +30,6 @@ public class JwtAuthenticationEntryPoint implements AuthenticationEntryPoint {
     response
         .getWriter()
         .write(
-            objectMapper.writeValueAsString(Map.of("error", authException.getLocalizedMessage())));
+            objectMapper.writeValueAsString(new ErrorMessage(HttpServletResponse.SC_UNAUTHORIZED, authException.getMessage(), null)));
   }
 }

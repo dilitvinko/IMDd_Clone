@@ -2,6 +2,7 @@ package com.my.project.imdd_clone.controller.security;
 
 import com.auth0.jwt.interfaces.DecodedJWT;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.my.project.imdd_clone.controller.handler.ErrorMessage;
 import com.my.project.imdd_clone.service.TokenService;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
@@ -65,7 +66,7 @@ public class JwtFilter extends OncePerRequestFilter {
         res.setContentType("application/json");
         PrintWriter out = res.getWriter();
         ObjectMapper mapper = new ObjectMapper();
-        out.println(mapper.writeValueAsString(Map.of("error", e.getMessage(), "code", "-1")));
+        out.println(mapper.writeValueAsString(new ErrorMessage(HttpServletResponse.SC_UNAUTHORIZED, e.getMessage(), null)));
         out.flush();
     }
 }

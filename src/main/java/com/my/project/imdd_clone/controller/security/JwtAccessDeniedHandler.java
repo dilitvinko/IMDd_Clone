@@ -1,15 +1,16 @@
 package com.my.project.imdd_clone.controller.security;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.my.project.imdd_clone.controller.handler.ErrorMessage;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
 import org.springframework.security.access.AccessDeniedException;
 import org.springframework.security.web.access.AccessDeniedHandler;
 import org.springframework.stereotype.Component;
 
 import java.io.IOException;
-import java.util.Map;
 
 @Component
 @RequiredArgsConstructor
@@ -28,7 +29,6 @@ public class JwtAccessDeniedHandler implements AccessDeniedHandler {
     response
         .getWriter()
         .write(
-            objectMapper.writeValueAsString(
-                Map.of("error", accessDeniedException.getLocalizedMessage())));
+            objectMapper.writeValueAsString(new ErrorMessage(HttpServletResponse.SC_FORBIDDEN, accessDeniedException.getMessage(), null)));
   }
 }
