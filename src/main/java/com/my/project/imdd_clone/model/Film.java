@@ -16,7 +16,7 @@ public class Film {
     @SequenceGenerator(name = "film_seq", allocationSize = 1)
     @Id
     @Column(name = "id")
-    private long id;
+    private Long id;
     @Basic
     @Column(name = "name")
     private String name;

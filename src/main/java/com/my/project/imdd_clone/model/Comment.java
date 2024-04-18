@@ -14,7 +14,7 @@ public class Comment {
     @SequenceGenerator(name = "comment_seq", allocationSize = 1)
     @Id
     @Column(name = "id")
-    private long id;
+    private Long id;
     @Basic
     @Column(name = "text")
     private String text;

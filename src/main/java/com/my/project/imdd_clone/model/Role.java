@@ -20,7 +20,7 @@ public class Role implements GrantedAuthority {
     @SequenceGenerator(name = "role_seq", allocationSize = 1)
     @Id
     @Column(name = "id")
-    private long id;
+    private Long id;
     private String name;
     @ManyToMany(
             fetch = FetchType.LAZY,

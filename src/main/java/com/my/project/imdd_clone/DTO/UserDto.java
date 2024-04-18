@@ -13,7 +13,7 @@ import java.util.Set;
 @Setter
 public class UserDto {
 
-    private long id;
+    private Long id;
     private String name;
     private String email;
     private String username;

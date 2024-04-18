@@ -14,7 +14,7 @@ public class Rating {
     @SequenceGenerator(name = "rating_seq", allocationSize = 1)
     @Id
     @Column(name = "id")
-    private long id;
+    private Long id;
     @Basic
     @Column(name = "points")
     private int points;

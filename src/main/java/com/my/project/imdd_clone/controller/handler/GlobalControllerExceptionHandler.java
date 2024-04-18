@@ -30,7 +30,7 @@ public class GlobalControllerExceptionHandler {
     @ExceptionHandler(value = {Exception.class})
     @ResponseStatus(value = HttpStatus.BAD_REQUEST)
     public ErrorMessage resourceNotFoundException(Exception ex, WebRequest request) {
-        log.error(ex.getMessage(), ex.getCause());
+        log.error(ex.getMessage(), ex);
         return new ErrorMessage(HttpStatus.BAD_REQUEST.value(), ex.getMessage(), Arrays.toString(ex.getStackTrace()));
     }
 }
