@@ -4,9 +4,14 @@ import com.my.project.imdd_clone.DTO.LoginRequest;
 import com.my.project.imdd_clone.DTO.TokenDto;
 import com.my.project.imdd_clone.DTO.UserDto;
 import com.my.project.imdd_clone.service.AuthService;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.web.authentication.logout.SecurityContextLogoutHandler;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -28,4 +33,14 @@ public class AuthApi {
     public ResponseEntity<TokenDto> registration(@Valid @RequestBody UserDto userDto) {
         return ResponseEntity.ok().body(authService.registerNewUser(userDto));
     }
+
+    @PostMapping(value="/logout")
+    public String logoutPage(HttpServletRequest request, HttpServletResponse response) {
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        if (auth != null){
+            new SecurityContextLogoutHandler().logout(request, response, auth);
+        }
+        return "logout success";
+    }
+
 }

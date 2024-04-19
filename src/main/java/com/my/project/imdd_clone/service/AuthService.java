@@ -26,12 +26,12 @@ public class AuthService {
 
     public TokenDto login(LoginRequest loginRequest) {
         try {
-            authenticationManager.authenticate(
-                    new UsernamePasswordAuthenticationToken(
-                            loginRequest.getUsername(), loginRequest.getPassword()));
+//            authenticationManager.authenticate(
+//                    new UsernamePasswordAuthenticationToken(
+//                            loginRequest.getUsername(), loginRequest.getPassword()));
             return tokenService.generateTokenPairs(loginRequest.getUsername());
         } catch (Exception e) {
-            throw new RuntimeException();
+            throw e;
         }
     }
 
