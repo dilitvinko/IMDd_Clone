@@ -3,6 +3,7 @@ package com.my.project.imdd_clone.controller;
 import com.my.project.imdd_clone.DTO.RatingDto;
 import com.my.project.imdd_clone.controller.security.CustomUserDetails;
 import com.my.project.imdd_clone.service.RatingService;
+import jakarta.annotation.security.RolesAllowed;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -16,6 +17,7 @@ public class RatingApi {
     private final RatingService ratingService;
 
     @PostMapping
+    @RolesAllowed("USER")
     @ResponseStatus(HttpStatus.CREATED)
     public RatingDto createRating(@RequestBody RatingDto ratingDto) {
         CustomUserDetails user = (CustomUserDetails)SecurityContextHolder.getContext().getAuthentication().getPrincipal();
