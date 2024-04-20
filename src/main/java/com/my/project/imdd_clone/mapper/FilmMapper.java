@@ -11,8 +11,10 @@ public abstract class FilmMapper {
 
     public abstract FilmDto toDto(Film entity);
 
+    @Mapping(target = "averageRating", ignore = true)
     public abstract Film toEntity(FilmDto entity);
 
     @BeanMapping(nullValuePropertyMappingStrategy = NullValuePropertyMappingStrategy.IGNORE)
-    abstract void updatePartial(@MappingTarget Film entity, FilmDto dto);
+    @Mapping(target = "averageRating", ignore = true)
+    public abstract void updatePartial(@MappingTarget Film entity, FilmDto dto);
 }

@@ -39,9 +39,8 @@ public class FilmService {
 
     public FilmDto update(Long id, FilmDto filmDto) {
         Film existingFilm = filmRepository.findById(id).orElseThrow(() -> new NoSuchElementException("Film not found with id: " + id));
-        Film updatedFilm = filmMapper.toEntity(filmDto);
-        updatedFilm.setId(existingFilm.getId());
-        updatedFilm = filmRepository.save(updatedFilm);
+        filmMapper.updatePartial(existingFilm, filmDto);
+        Film updatedFilm = filmRepository.save(existingFilm);
         return filmMapper.toDto(updatedFilm);
     }
 
