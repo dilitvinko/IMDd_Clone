@@ -13,6 +13,31 @@ services:
       - postgres-network
     restart: unless-stopped
 
+  imdd_clone:
+    image: imdd:v3
+    ports:
+      - "8181:8181"
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:postgresql://postgres:5432/imdd
+    depends_on:
+      - postgres
+    networks:
+      - postgres-network
+    restart: unless-stopped
+
+  pgadmin:
+    image: dpage/pgadmin4
+    environment:
+      PGADMIN_DEFAULT_EMAIL: ${PGADMIN_DEFAULT_EMAIL:-admin@admin.org}
+      PGADMIN_DEFAULT_PASSWORD: ${PGADMIN_DEFAULT_PASSWORD:-admin}
+    ports:
+      - "${PGADMIN_PORT:-5050}:80"
+    volumes:
+      - "./servers.json:/pgadmin4/servers.json"
+    networks:
+      - postgres-network
+    restart: unless-stopped
+
 
 networks:
   postgres-network:
