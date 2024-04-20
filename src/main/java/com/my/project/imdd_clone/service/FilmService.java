@@ -4,22 +4,21 @@ import com.my.project.imdd_clone.DTO.FilmDto;
 import com.my.project.imdd_clone.mapper.FilmMapper;
 import com.my.project.imdd_clone.model.Film;
 import com.my.project.imdd_clone.repository.FilmRepository;
+import com.my.project.imdd_clone.repository.RatingRepository;
 import com.querydsl.core.types.Predicate;
 import lombok.AllArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Component;
 
-import java.util.List;
 import java.util.NoSuchElementException;
-import java.util.stream.Collectors;
-import java.util.stream.StreamSupport;
 
 @Component
 @AllArgsConstructor
 public class FilmService {
 
     private final FilmRepository filmRepository;
+    private final RatingRepository ratingRepository;
     private final FilmMapper filmMapper;
 
     public FilmDto get(Long id) {
@@ -44,6 +43,15 @@ public class FilmService {
         updatedFilm.setId(existingFilm.getId());
         updatedFilm = filmRepository.save(updatedFilm);
         return filmMapper.toDto(updatedFilm);
+    }
+
+    public void updateAverageRating(Long filmId, Integer ratingPoints) {
+        Film existingFilm = filmRepository.findById(filmId).orElseThrow(() -> new NoSuchElementException("Film not found with id: " + filmId));
+        Integer currentRatingCount = ratingRepository.countRatingsByFilm(existingFilm);
+        Double currentAverageRating = existingFilm.getAverageRating();
+        Double newAverageRating = (currentAverageRating * currentRatingCount + ratingPoints)/(currentRatingCount + 1);
+        existingFilm.setAverageRating(newAverageRating);
+        filmRepository.save(existingFilm);
     }
 
     public void delete(Long id) {

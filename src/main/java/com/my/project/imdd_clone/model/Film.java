@@ -26,6 +26,9 @@ public class Film {
     @Basic
     @Column(name = "description")
     private String description;
+    @Basic
+    @Column(name = "average_rating")
+    private Double averageRating;
     @OneToMany(mappedBy = "film")
     private List<Comment> comments;
     @OneToMany(mappedBy = "film")

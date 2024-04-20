@@ -1,5 +1,6 @@
 package com.my.project.imdd_clone.repository;
 
+import com.my.project.imdd_clone.model.Film;
 import com.my.project.imdd_clone.model.Rating;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
@@ -9,4 +10,6 @@ public interface RatingRepository extends JpaRepository<Rating, Long> {
 
     @Query("Select avg(r.points) FROM Rating r where r.film.id = :filmId")
     Double getFilmAverageRating(@Param("filmId") Long filmId);
+
+    Integer countRatingsByFilm(Film film);
 }
