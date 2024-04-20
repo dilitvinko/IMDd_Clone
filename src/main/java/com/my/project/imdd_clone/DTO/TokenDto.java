@@ -1,15 +1,10 @@
 package com.my.project.imdd_clone.DTO;
 
-import lombok.AllArgsConstructor;
 import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
 
-@Data
-@Builder
-@NoArgsConstructor
-@AllArgsConstructor
-public class TokenDto {
-    private String accessToken;
-    private UserDto user;
+public record TokenDto(
+        String accessToken,
+        UserDto user
+) {
+    @Builder public TokenDto {}
 }

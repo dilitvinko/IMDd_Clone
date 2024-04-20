@@ -29,7 +29,7 @@ public class AuthService {
 //            authenticationManager.authenticate(
 //                    new UsernamePasswordAuthenticationToken(
 //                            loginRequest.getUsername(), loginRequest.getPassword()));
-            return tokenService.generateTokenPairs(loginRequest.getUsername());
+            return tokenService.generateTokenPairs(loginRequest.username());
         } catch (Exception e) {
             throw e;
         }

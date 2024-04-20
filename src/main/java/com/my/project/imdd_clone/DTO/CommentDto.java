@@ -1,13 +1,8 @@
 package com.my.project.imdd_clone.DTO;
 
-import lombok.Getter;
-import lombok.Setter;
-
-@Getter
-@Setter
-public class CommentDto {
-    private Long id;
-    private String text;
-    private Long userId;
-    private Long filmId;
-}
+public record CommentDto(
+        Long id,
+        String text,
+        Long userId,
+        Long filmId
+) {}
