@@ -46,8 +46,8 @@ public class FilmService {
 
     public void updateAverageRating(Long filmId, Integer ratingPoints) {
         Film existingFilm = filmRepository.findById(filmId).orElseThrow(() -> new NoSuchElementException("Film not found with id: " + filmId));
-        Integer currentRatingCount = ratingRepository.countRatingsByFilm(existingFilm);
-        Double currentAverageRating = existingFilm.getAverageRating();
+        Integer currentRatingCount = ratingRepository.countRatingsByFilm(existingFilm).orElse(0);
+        Double currentAverageRating = existingFilm.getAverageRating() != null ? existingFilm.getAverageRating() : 0;
         Double newAverageRating = (currentAverageRating * currentRatingCount + ratingPoints)/(currentRatingCount + 1);
         existingFilm.setAverageRating(newAverageRating);
         filmRepository.save(existingFilm);

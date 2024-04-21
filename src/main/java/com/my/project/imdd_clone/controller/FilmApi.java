@@ -7,6 +7,7 @@ import com.my.project.imdd_clone.repository.RatingRepository;
 import com.my.project.imdd_clone.service.FilmService;
 import com.querydsl.core.types.Predicate;
 import jakarta.annotation.security.RolesAllowed;
+import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -41,7 +42,7 @@ public class FilmApi {
     @PostMapping
     @RolesAllowed("ADMIN")
     @ResponseStatus(HttpStatus.CREATED)
-    public FilmDto createFilm(@RequestBody FilmDto filmDto) {
+    public FilmDto createFilm(@Valid @RequestBody FilmDto filmDto) {
         return filmService.create(filmDto);
     }
 
