@@ -7,3 +7,17 @@ databaseChangeLog:
         - sqlFile:
             path: test-data.sql
             relativeToChangelogFile: true
+
+  - changeSet:
+      id: 099-test-data-2-update-average
+      author: dmitry.l
+      comment: calculate average_rating column from rating table
+      changes:
+        - sql:
+            sql: UPDATE film
+              SET average_rating = (
+              SELECT AVG(points)
+              FROM rating
+              WHERE rating.film_id = film.id
+              )
+              WHERE true

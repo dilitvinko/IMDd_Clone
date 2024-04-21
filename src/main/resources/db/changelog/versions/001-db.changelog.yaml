@@ -18,17 +18,3 @@ databaseChangeLog:
               - column:
                   name: average_rating
                   type: DOUBLE PRECISION
-
-  - changeSet:
-      id: 001-db-2
-      author: dmitry.l
-      comment: calculate average_rating column from rating table
-      changes:
-        - sql:
-            sql: UPDATE film
-              SET average_rating = (
-                SELECT AVG(points)
-                FROM rating
-                WHERE rating.film_id = film.id
-              )
-              WHERE true
