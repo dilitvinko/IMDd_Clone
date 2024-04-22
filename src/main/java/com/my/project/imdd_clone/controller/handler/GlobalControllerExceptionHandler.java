@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RestControllerAdvice;
 
 import java.util.Arrays;
 import java.util.Map;
+import java.util.NoSuchElementException;
 import java.util.stream.Collectors;
 
 @RestControllerAdvice
@@ -52,5 +53,12 @@ public class GlobalControllerExceptionHandler {
         log.debug(ex.getMessage(), ex);
         Map<String, String> errors = ex.getBindingResult().getFieldErrors().stream().collect(Collectors.toMap(FieldError::getField, FieldError::getDefaultMessage));
         return new ErrorMessage(HttpStatus.BAD_REQUEST.value(), errors.toString(), Arrays.toString(ex.getStackTrace()));
+    }
+
+    @ExceptionHandler(value = {NoSuchElementException.class})
+    @ResponseStatus(value = HttpStatus.BAD_REQUEST)
+    public ErrorMessage NoSuchElementException(NoSuchElementException ex) {
+        log.debug(ex.getMessage(), ex);
+        return new ErrorMessage(HttpStatus.BAD_REQUEST.value(), ex.getMessage(), Arrays.toString(ex.getStackTrace()));
     }
 }

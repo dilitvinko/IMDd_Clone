@@ -1,0 +1,14 @@
+#server:
+#  port: 8181
+
+test:
+  url: http://localhost:${server.port}
+
+spring:
+  application:
+    name: IMDd_Clone
+  datasource:
+    url: jdbc:postgresql://localhost:5432/imdd_test
+    driverClassName: org.postgresql.Driver
+    username: postgres
+    password: postgres
