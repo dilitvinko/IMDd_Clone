@@ -10,14 +10,15 @@ import jakarta.persistence.EntityNotFoundException;
 import org.mapstruct.*;
 import org.springframework.beans.factory.annotation.Autowired;
 
+import java.util.NoSuchElementException;
+
 @Mapper(componentModel = "spring")
 public abstract class CommentMapper {
+    @Autowired
+    private FilmRepository filmRepository;
 
     @Autowired
-    FilmRepository filmRepository;
-
-    @Autowired
-    UserRepository userRepository;
+    private UserRepository userRepository;
 
     @Mapping(target = "filmId", source = "film.id")
     @Mapping(target = "userId", source = "user.id")
@@ -32,7 +33,7 @@ public abstract class CommentMapper {
             return null;
         }
         return filmRepository.findById(filmId)
-                .orElseThrow(() -> new EntityNotFoundException("Film not found with id: " + filmId));
+                .orElseThrow(() -> new NoSuchElementException("Film not found with id: " + filmId));
     }
 
     User mapUser(Long userId) {
@@ -42,7 +43,4 @@ public abstract class CommentMapper {
         return userRepository.findById(userId)
                 .orElseThrow(() -> new EntityNotFoundException("User not found with id: " + userId));
     }
-
-    @BeanMapping(nullValuePropertyMappingStrategy = NullValuePropertyMappingStrategy.IGNORE)
-    public abstract void updatePartial(@MappingTarget Comment entity, CommentDto dto);
 }

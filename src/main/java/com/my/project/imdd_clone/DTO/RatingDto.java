@@ -9,6 +9,7 @@ public record RatingDto(
         @Min(1)
         @Max(10)
         Integer points,
+        @NotNull
         Long userId,
         @NotNull
         Long filmId

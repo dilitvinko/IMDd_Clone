@@ -9,9 +9,5 @@ import org.springframework.data.repository.query.Param;
 import java.util.Optional;
 
 public interface RatingRepository extends JpaRepository<Rating, Long> {
-
-    @Query("Select avg(r.points) FROM Rating r where r.film.id = :filmId")
-    Double getFilmAverageRating(@Param("filmId") Long filmId);
-
     Optional<Integer> countRatingsByFilm(Film film);
 }

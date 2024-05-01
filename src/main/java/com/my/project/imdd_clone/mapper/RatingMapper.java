@@ -1,6 +1,5 @@
 package com.my.project.imdd_clone.mapper;
 
-import com.my.project.imdd_clone.DTO.FilmDto;
 import com.my.project.imdd_clone.DTO.RatingDto;
 import com.my.project.imdd_clone.model.Film;
 import com.my.project.imdd_clone.model.Rating;
@@ -43,7 +42,4 @@ public abstract class RatingMapper {
         return userRepository.findById(userId)
                 .orElseThrow(() -> new EntityNotFoundException("User not found with id: " + userId));
     }
-
-    @BeanMapping(nullValuePropertyMappingStrategy = NullValuePropertyMappingStrategy.IGNORE)
-    abstract void updatePartial(@MappingTarget Rating entity, RatingDto dto);
 }

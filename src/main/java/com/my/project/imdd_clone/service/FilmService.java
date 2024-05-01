@@ -11,6 +11,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Component;
 
+import java.sql.Date;
 import java.util.NoSuchElementException;
 
 @Component
@@ -22,14 +23,17 @@ public class FilmService {
     private final FilmMapper filmMapper;
 
     public FilmDto get(Long id) {
-        Film film = filmRepository.findById(id).orElseThrow(() -> new NoSuchElementException("Film not found with id: " + id));
-        return filmMapper.toDto(film);
+        return filmRepository.findById(id)
+                .map(filmMapper::toDto)
+                .orElseThrow(() -> new NoSuchElementException("Film not found with id: " + id));
     }
 
     public Page<FilmDto> getAll(Predicate predicate, Pageable pageable) {
         Page<Film> films = filmRepository.findAll(predicate, pageable);
         return films.map(filmMapper::toDto);
     }
+
+    // TODO Criteria
 
     public FilmDto create(FilmDto filmDto) {
         Film film = filmMapper.toEntity(filmDto);

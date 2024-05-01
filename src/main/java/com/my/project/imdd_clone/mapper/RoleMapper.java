@@ -13,7 +13,4 @@ public interface RoleMapper {
     RoleDto toDto(Role role);
 
     Role toEntity(RoleDto role);
-
-    @BeanMapping(nullValuePropertyMappingStrategy = NullValuePropertyMappingStrategy.IGNORE)
-    void updatePartial(@MappingTarget Role entity, RoleDto dto);
 }

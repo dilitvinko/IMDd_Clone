@@ -16,15 +16,14 @@ public class Comment {
     @Column(name = "id")
     private Long id;
     @Basic
-    @Column(name = "text")
+    @Column(name = "text", nullable = false)
     private String text;
-    @ManyToOne
+    @ManyToOne (cascade = {CascadeType.PERSIST, CascadeType.DETACH} )
     @JoinColumn(name = "user_id")
     private User user;
-    @ManyToOne
+    @ManyToOne (cascade = {CascadeType.PERSIST, CascadeType.DETACH} )
     @JoinColumn(name = "film_id")
     private Film film;
-
 
     @Override
     public boolean equals(Object o) {

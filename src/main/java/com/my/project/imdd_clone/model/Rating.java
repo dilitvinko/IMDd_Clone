@@ -16,7 +16,7 @@ public class Rating {
     @Column(name = "id")
     private Long id;
     @Basic
-    @Column(name = "points")
+    @Column(name = "points", nullable = false)
     private int points;
     @ManyToOne
     @JoinColumn(name = "user_id")

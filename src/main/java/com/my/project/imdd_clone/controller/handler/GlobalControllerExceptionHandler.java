@@ -23,33 +23,20 @@ public class GlobalControllerExceptionHandler {
 
     @ExceptionHandler(AccessDeniedException.class)
     @ResponseStatus(value = HttpStatus.FORBIDDEN)
-    public ErrorMessage accessDeniedException(Exception ex) {
-        return new ErrorMessage(HttpStatus.FORBIDDEN.value(), ex.getMessage(), "excephandler");
-    }
-
-    @ExceptionHandler(AuthenticationException.class)
-    @ResponseStatus(value = HttpStatus.UNAUTHORIZED)
-    public ErrorMessage authenticationException(Exception ex) {
-        return new ErrorMessage(HttpStatus.UNAUTHORIZED.value(), ex.getMessage(), "excephandler");
+    public ErrorMessage accessDeniedException(AccessDeniedException ex) {
+        return new ErrorMessage(HttpStatus.FORBIDDEN.value(), ex.getMessage(), Arrays.toString(ex.getStackTrace()));
     }
 
     @ExceptionHandler(value = {Exception.class})
-    @ResponseStatus(value = HttpStatus.BAD_REQUEST)
-    public ErrorMessage resourceNotFoundException(Exception ex) {
-        log.error(ex.getMessage(), ex);
-        return new ErrorMessage(HttpStatus.BAD_REQUEST.value(), ex.getMessage(), Arrays.toString(ex.getStackTrace()));
-    }
-
-    @ExceptionHandler(value = {ConstraintViolationException.class, DataIntegrityViolationException.class})
     @ResponseStatus(value = HttpStatus.INTERNAL_SERVER_ERROR)
-    public ErrorMessage constraintViolationException(Exception ex) {
+    public ErrorMessage resourceNotFoundException(Exception ex) {
         log.error(ex.getMessage(), ex);
         return new ErrorMessage(HttpStatus.INTERNAL_SERVER_ERROR.value(), ex.getMessage(), Arrays.toString(ex.getStackTrace()));
     }
 
     @ExceptionHandler(value = {MethodArgumentNotValidException.class})
     @ResponseStatus(value = HttpStatus.BAD_REQUEST)
-    public ErrorMessage ValidationException(MethodArgumentNotValidException ex) {
+    public ErrorMessage validationException(MethodArgumentNotValidException ex) {
         log.debug(ex.getMessage(), ex);
         Map<String, String> errors = ex.getBindingResult().getFieldErrors().stream().collect(Collectors.toMap(FieldError::getField, FieldError::getDefaultMessage));
         return new ErrorMessage(HttpStatus.BAD_REQUEST.value(), errors.toString(), Arrays.toString(ex.getStackTrace()));
@@ -57,8 +44,10 @@ public class GlobalControllerExceptionHandler {
 
     @ExceptionHandler(value = {NoSuchElementException.class})
     @ResponseStatus(value = HttpStatus.BAD_REQUEST)
-    public ErrorMessage NoSuchElementException(NoSuchElementException ex) {
+    public ErrorMessage noSuchElementException(NoSuchElementException ex) {
         log.debug(ex.getMessage(), ex);
         return new ErrorMessage(HttpStatus.BAD_REQUEST.value(), ex.getMessage(), Arrays.toString(ex.getStackTrace()));
     }
+
+    // не вижу случаях обратки ошибки, что юзер уже существует (при регистрации)
 }

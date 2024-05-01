@@ -42,7 +42,7 @@ public class SecurityConfig {
                 .authorizeHttpRequests((authz) -> authz
                         .requestMatchers("/api/admin/**").hasRole("ADMIN")
                         .requestMatchers("/auth/**").permitAll()
-                        .requestMatchers("/healthCheck").permitAll()
+                        .requestMatchers("/actuator/**").permitAll()
                         .requestMatchers("/api-docs/**").permitAll()
                         .anyRequest().authenticated()
                 )

@@ -1,7 +1,9 @@
 package com.my.project.imdd_clone.model;
 
 import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import java.sql.Date;
@@ -11,6 +13,8 @@ import java.util.Objects;
 @Entity
 @Getter
 @Setter
+@AllArgsConstructor
+@NoArgsConstructor
 public class Film {
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "film_seq")
     @SequenceGenerator(name = "film_seq", allocationSize = 1)
@@ -18,7 +22,7 @@ public class Film {
     @Column(name = "id")
     private Long id;
     @Basic
-    @Column(name = "name")
+    @Column(name = "name", nullable = false)
     private String name;
     @Basic
     @Column(name = "release_date")

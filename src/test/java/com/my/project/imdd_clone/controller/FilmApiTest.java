@@ -5,6 +5,7 @@ import com.my.project.imdd_clone.DTO.LoginRequest;
 import com.my.project.imdd_clone.DTO.TokenDto;
 import com.my.project.imdd_clone.clients.AuthClient;
 import com.my.project.imdd_clone.clients.FilmClient;
+import com.my.project.imdd_clone.controller.response.APIResponse;
 import com.my.project.imdd_clone.repository.CommentRepository;
 import com.my.project.imdd_clone.repository.FilmRepository;
 import feign.FeignException;
@@ -21,6 +22,7 @@ import org.springframework.test.context.ActiveProfiles;
 
 import java.sql.Date;
 import java.util.Collections;
+import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -49,12 +51,12 @@ public class FilmApiTest {
 
     @BeforeAll
     public void auth() {
-        TokenDto userTokenDto = authClient.login(new LoginRequest("dilit", "password"));
-        TokenDto adminTokenDto = authClient.login(new LoginRequest("adminlogin", "password"));
-        userToken = "Bearer " + userTokenDto.accessToken();
-        adminToken = "Bearer " + adminTokenDto.accessToken();
-        userId = userTokenDto.user().id();
-        adminId = userTokenDto.user().id();
+        APIResponse<TokenDto> userTokenDto = authClient.login(new LoginRequest("dilit", "password"));
+        APIResponse<TokenDto> adminTokenDto = authClient.login(new LoginRequest("adminlogin", "password"));
+        userToken = "Bearer " + userTokenDto.getData().accessToken();
+        adminToken = "Bearer " + adminTokenDto.getData().accessToken();
+        userId = userTokenDto.getData().user().id();
+        adminId = userTokenDto.getData().user().id();
     }
 
     @AfterAll
@@ -94,44 +96,44 @@ public class FilmApiTest {
     public void testGetFilm_UserRole_Success() {
         //Arrange
         FilmDto filmDto = new FilmDto(null, "Test Film", Date.valueOf("2024-01-01"), "Test Description", Collections.emptyList(), null);
-        FilmDto createdFilm = filmClient.createFilm(filmDto, adminToken);
+        APIResponse<FilmDto> createdFilm = filmClient.createFilm(filmDto, adminToken);
 
         //Act
-        FilmDto retrievedFilm = filmClient.getFilm(createdFilm.id(), userToken);
+        APIResponse<FilmDto> retrievedFilm = filmClient.getFilm(createdFilm.getData().id(), userToken);
 
         //Assert
-        assertTrue(new ReflectionEquals(filmDto, "id", "releaseDate").matches(retrievedFilm));
+        assertTrue(new ReflectionEquals(filmDto, "id", "releaseDate").matches(retrievedFilm.getData()));
     }
 
     @Test
     public void testGetAllFilms_UserRole_Success() {
         //Act
-        Page<FilmDto> filmsPage = filmClient.getAllFilms(userToken);
+        APIResponse<List<FilmDto>> filmsList = filmClient.getAllFilms(userToken);
 
         //Assert
-        assertNotNull(filmsPage);
+        assertNotNull(filmsList);
     }
 
     @Test
     public void testDeleteFilm_Success_AdminRole() throws Exception {
         //Arrange
         FilmDto filmDto = new FilmDto(null, "Test Film", Date.valueOf("2024-01-01"), "Test Description", Collections.emptyList(), 0.0);
-        FilmDto createdFilm = filmClient.createFilm(filmDto, adminToken);
+        APIResponse<FilmDto> createdFilm = filmClient.createFilm(filmDto, adminToken);
 
         //Act
-        filmClient.deleteFilm(createdFilm.id(), adminToken);
+        filmClient.deleteFilm(createdFilm.getData().id(), adminToken);
 
         //Assert
-        assertThrows(FeignException.BadRequest.class, () -> filmClient.getFilm(createdFilm.id(), adminToken));
+        assertThrows(FeignException.BadRequest.class, () -> filmClient.getFilm(createdFilm.getData().id(), adminToken));
     }
 
     @Test
     public void testDeleteFilm_Failure_UserRole() {
         //Arrange
         FilmDto filmDto = new FilmDto(null, "Test Film", Date.valueOf("2024-01-01"), "Test Description", Collections.emptyList(), 0.0);
-        FilmDto createdFilm = filmClient.createFilm(filmDto, adminToken);
+        APIResponse<FilmDto> createdFilm = filmClient.createFilm(filmDto, adminToken);
 
         //Act & Assert
-        assertThrows(FeignException.Forbidden.class, () -> filmClient.deleteFilm(createdFilm.id(), userToken));
+        assertThrows(FeignException.Forbidden.class, () -> filmClient.deleteFilm(createdFilm.getData().id(), userToken));
     }
 }

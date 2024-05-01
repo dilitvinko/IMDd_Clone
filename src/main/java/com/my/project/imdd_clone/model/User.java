@@ -1,6 +1,7 @@
 package com.my.project.imdd_clone.model;
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotNull;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -19,13 +20,13 @@ public class User {
     @Column(name = "id")
     private Long id;
     @Basic
-    @Column(name = "name")
+    @Column(name = "name", nullable = false)
     private String name;
     @Basic
-    @Column(name = "email")
+    @Column(name = "email", nullable = false)
     private String email;
     @Basic
-    @Column(name = "username")
+    @Column(name = "username", nullable = false)
     private String username;
     @Basic
     @Column(name = "password")

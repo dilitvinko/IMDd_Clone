@@ -9,6 +9,8 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
+import java.util.NoSuchElementException;
+
 @Service
 @Slf4j
 @RequiredArgsConstructor
@@ -18,11 +20,8 @@ public class UserService {
     private final UserMapper mapper;
 
     public User getByUsername(String username) {
-        var user = repository.findByUsername(username);
-        if (user.isEmpty()) {
-            throw new EntityNotFoundException("user not found!");
-        }
-        return user.get();
+       return repository.findByUsername(username)
+            .orElseThrow(() ->  new NoSuchElementException("user not found!"));
     }
 
     public UserDto getDtoByUsername(String username) {
