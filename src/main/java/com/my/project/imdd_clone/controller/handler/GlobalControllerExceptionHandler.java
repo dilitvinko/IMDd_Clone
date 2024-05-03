@@ -49,5 +49,4 @@ public class GlobalControllerExceptionHandler {
         return new ErrorMessage(HttpStatus.BAD_REQUEST.value(), ex.getMessage(), Arrays.toString(ex.getStackTrace()));
     }
 
-    // не вижу случаях обратки ошибки, что юзер уже существует (при регистрации)
 }

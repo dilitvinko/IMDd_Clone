@@ -1,5 +1,5 @@
-#server:
-#  port: 8181
+server:
+  port: 8181
 
 test:
   url: http://localhost:${server.port}

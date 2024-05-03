@@ -60,7 +60,7 @@ public class FilmApi {
     @PutMapping("/{id}")
     @RolesAllowed("ADMIN")
     @ResponseStatus(HttpStatus.OK)
-    public APIResponse<FilmDto> updateFilm(@PathVariable("id") @Max(value = 10) Long id, @RequestBody FilmDto filmDto) {
+    public APIResponse<FilmDto> updateFilm(@PathVariable("id") Long id, @RequestBody FilmDto filmDto) {
         FilmDto filmUpdated = filmService.update(id, filmDto);
         return APIResponse.<FilmDto>builder()
                 .data(filmUpdated)

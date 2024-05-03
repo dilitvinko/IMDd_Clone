@@ -33,9 +33,9 @@ public class Film {
     @Basic
     @Column(name = "average_rating")
     private Double averageRating;
-    @OneToMany(mappedBy = "film")
+    @OneToMany(mappedBy = "film", cascade = CascadeType.ALL)
     private List<Comment> comments;
-    @OneToMany(mappedBy = "film")
+    @OneToMany(mappedBy = "film", cascade = CascadeType.ALL)
     private List<Rating> ratings;
 
     @Override
