@@ -5,6 +5,13 @@ server:
 spring:
   application:
     name: IMDd_Clone
+  data:
+    mongodb:
+      port: 27017
+      database: imdd-mongo
+      username: mongoadmin
+      password: mongopass
+      host: localhost
   datasource:
     url: jdbc:postgresql://localhost:5432/imdd
     driverClassName: org.postgresql.Driver

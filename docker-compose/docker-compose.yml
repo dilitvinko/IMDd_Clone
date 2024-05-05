@@ -1,6 +1,24 @@
 version: '3.3'
 
 services:
+  mongo:
+    ports:
+      - '27017:27017'
+    container_name: mongodb
+    restart: always
+    logging:
+      options:
+        max-size: 1g
+    environment:
+      - MONGO_INITDB_DATABASE=imdd-mongo
+      - MONGO_INITDB_ROOT_USERNAME=mongoadmin
+      - MONGO_INITDB_ROOT_PASSWORD=mongopass
+    networks:
+      - postgres-network
+    image: mongo:latest
+    volumes:
+      - ./mongo-init.js:/docker-entrypoint-initdb.d/mongo-init.js:ro
+
   postgres:
     image: postgres:13.6
     ports:
@@ -21,6 +39,7 @@ services:
       SPRING_DATASOURCE_URL: jdbc:postgresql://postgres:5432/imdd
     depends_on:
       - postgres
+      - mongo
     networks:
       - postgres-network
     restart: unless-stopped
